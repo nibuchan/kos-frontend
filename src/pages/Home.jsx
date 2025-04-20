@@ -5,7 +5,7 @@ const Home = () => {
     const [dataKos, setDataKos] = useState([])
 
     useEffect(() => {
-        fetch("kos-backend-production.up.railway.app/api/kos")
+        fetch("https://kos-backend-production.up.railway.app/api/kos")
         .then(res => res.json())
         .then(data => setDataKos(data))
         .catch(err => console.error("Gagal fetch kos:", err));

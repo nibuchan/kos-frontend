@@ -8,7 +8,7 @@ const DetailKos = () => {
     const [kos, setKos] = useState(null);
 
     useEffect(() => {
-        fetch(`kos-backend-production.up.railway.app/api/kos/${id}`)
+        fetch(`https://kos-backend-production.up.railway.app/api/kos/${id}`)
             .then((res) => res.json())
             .then((data) => setKos(data))
             .catch((err) => console.error("Gagal fetch detail kos:", err))

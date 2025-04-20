@@ -13,7 +13,7 @@ const Login = () => {
         setError("");
 
         try {
-            const res = await fetch("kos-backend-production.up.railway.app/api/auth/login", {
+            const res = await fetch("https://kos-backend-production.up.railway.app/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(form)
