@@ -39,12 +39,12 @@ const Navbar = () => {
 
                 {/* Search Bar */}
                 <div className="relative flex-1 mx-6">
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         value={query}
                         onChange={handleSearch}
                         placeholder="Cari kos...."
-                        className="w-full px-4 py-2 rounded-md border border-orange-500 placeholder:text-gray-700 text-black focus:outline-none focus:ring-2 focus:ring-orange-400" 
+                        className="w-full px-4 py-2 rounded-md border border-orange-500 placeholder:text-gray-700 text-black focus:outline-none focus:ring-2 focus:ring-orange-400"
                     />
 
                     {query && (
@@ -53,13 +53,13 @@ const Navbar = () => {
                                 <div className="px-4 py-2 text-gray-500">Kos tidak ditemukan</div>
                             ) : (
                                 filteredKos.map((kos) => (
-                                    <a 
-                                        href={`/kos/${kos.id}`}
+                                    <a
+                                        onClick={() => navigate(`/kos/${kos.id}`)}
                                         key={kos.id}
                                         className="flex items-start gap-2 px-4 py-2 hover:bg-orange-100 border-b last:border-none"
                                     >
                                         {kos.foto_url && (
-                                            <img 
+                                            <img
                                                 src={Array.isArray(kos.foto_url)
                                                     ? kos.foto_url[0]
                                                     : JSON.parse(kos.foto_url)[0]
@@ -84,13 +84,13 @@ const Navbar = () => {
 
                 {/* Desktop Login/Register */}
                 <div className="hidden md:flex space-x-3">
-                    <button 
-                        className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800" 
+                    <button
+                        className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
                         onClick={() => navigate("/login")}
                     >
                         Login
                     </button>
-                    <button 
+                    <button
                         className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
                         onClick={() => navigate("/register")}
                     >
@@ -112,14 +112,14 @@ const Navbar = () => {
             {menuOpen && (
                 <div className="md:hidden px-6 pb-4">
                     <div className="flex flex-col bg-white border rounded-md shadow-md">
-                        <button 
-                            className="w-full text-left px-4 py-2 hover:bg-gray-100" 
+                        <button
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
                             onClick={() => navigate("/login")}
                         >
                             Login
                         </button>
-                        <button 
-                            className="w-full text-left px-4 py-2 hover:bg-gray-100" 
+                        <button
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
                             onClick={() => navigate("/register")}
                         >
                             Register
