@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import KosCard from "../components/KosCard";
+import Hero from "../components/Hero";
 
 const Home = () => {
     const [dataKos, setDataKos] = useState([])
@@ -13,7 +14,8 @@ const Home = () => {
 
     return (
         <div className="p-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Hero />
+            <div className="grid mt-40 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dataKos.map(kos => (
                     <KosCard key={kos.id} kos={kos} />
                 ))}
