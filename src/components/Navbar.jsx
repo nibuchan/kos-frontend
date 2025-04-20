@@ -8,7 +8,7 @@ const Navbar = () => {
     const [dataKos, setDataKos] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:3000/api/kos")
+        fetch("kos-backend-production.up.railway.app/api/kos")
             .then((res) => res.json())
             .then((data) => setDataKos(data))
             .catch((err) => console.error("Gagal fetch kos:", err))

@@ -43,7 +43,7 @@ const DashboardKos = ({ pemilikId }) => {
     }, [isAuthorized, pemilikId]);
 
     const fetchKos = async () => {
-        const res = await fetch(`http://localhost:3000/api/kos?pemilik=${pemilikId}`, {
+        const res = await fetch(`kos-backend-production.up.railway.app/api/kos?pemilik=${pemilikId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -74,8 +74,8 @@ const DashboardKos = ({ pemilikId }) => {
         e.preventDefault();
 
         const endpoint = isEditing
-            ? `http://localhost:3000/api/kos/${editId}`
-            : "http://localhost:3000/api/kos";
+            ? `kos-backend-production.up.railway.app/api/kos/${editId}`
+            : "kos-backend-production.up.railway.app/api/kos";
 
         const method = isEditing ? "PUT" : "POST";
 
@@ -131,7 +131,7 @@ const DashboardKos = ({ pemilikId }) => {
         const confirmDelete = confirm("Yakin ingin menghapus kos ini?");
         if (!confirmDelete) return;
 
-        const res = await fetch(`http://localhost:3000/api/kos/${id}`, {
+        const res = await fetch(`kos-backend-production.up.railway.app/api/kos/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${token}`
