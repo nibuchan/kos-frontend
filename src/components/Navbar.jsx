@@ -35,7 +35,12 @@ const Navbar = () => {
         <div className="w-screen bg-white shadow-md">
             <div className="max-w-screen mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Nama Website */}
-                <div className="hidden md:block text-2xl font-extrabold text-orange-600">BaCariKos</div>
+                <div
+                     onClick={() => navigate("/")}
+                    className="hidden md:block text-2xl font-extrabold text-orange-600"
+                >
+                    BaCariKos
+                </div>
 
                 {/* Search Bar */}
                 <div className="relative flex-1 mx-6">
