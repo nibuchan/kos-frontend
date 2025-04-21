@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
-    const navigate = useNavigate();
+const Navbar = () => { const navigate = useNavigate();
     const [query, setQuery] = useState("");
     const [filteredKos, setFilteredKos] = useState([]);
     const [dataKos, setDataKos] = useState([]);
