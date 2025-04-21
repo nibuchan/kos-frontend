@@ -18,6 +18,8 @@ L.Icon.Default.mergeOptions({
 const DetailKos = () => {
     const { id } = useParams();
     const [kos, setKos] = useState(null);
+    const [showGallery, setShowGallery] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
         fetch(`https://kos-backend-production.up.railway.app/api/kos/${id}`)
@@ -46,7 +48,8 @@ const DetailKos = () => {
                     <img
                         src={fotoList[0]}
                         alt="Foto Kos"
-                        className="rounded-lg object-cover h-48 w-72 shadow-sm border border-gray-200"
+                        onClick={() => setShowGallery(true)}
+                        className="cursor-pointer rounded-lg object-cover h-48 w-72 shadow-sm border border-gray-200"
                     />
                 </div>
 
@@ -83,6 +86,7 @@ const DetailKos = () => {
                     <MapContainer
                         center={[kos.latitude, kos.longitude]}
                         zoom={16}
+                        className="z-0"
                         style={{ height: "300px", width: "100%", borderRadius: "0.75rem" }}
                     >
                         <TileLayer
@@ -93,6 +97,44 @@ const DetailKos = () => {
                             <Popup>{kos.nama}</Popup>
                         </Marker>
                     </MapContainer>
+                </div>
+            )}
+
+            {/* Slider */}
+            {showGallery && (
+                <div className="fixed inset-0 bg-black bg-opacity-70 z-50 flex flex-col items-center justify-center">
+                    <button
+                        onClick={() => setShowGallery(false)}
+                        className="absolute top-4 right-4 text-white text-2xl"
+                    >
+                        ✖
+                    </button>
+
+                    <div className="flex items-center gap-4 px-6">
+                        <button
+                            onClick={() => setCurrentIndex((prev) => (prev - 1 + fotoList.length) % fotoList.length)}
+                            className="text-white text-3xl"
+                        >
+                            ◀
+                        </button>
+
+                        <img
+                            src={fotoList[currentIndex]}
+                            alt={`Foto ${currentIndex + 1}`}
+                            className="max-h-[80vh] max-w-[80vw] object-contain rounded-lg shadow-lg"
+                        />
+
+                        <button
+                            onClick={() => setCurrentIndex((prev) => (prev + 1) % fotoList.length)}
+                            className="text-white text-3xl"
+                        >
+                            ▶
+                        </button>
+                    </div>
+
+                    <p className="text-white mt-4">
+                        {currentIndex + 1} / {fotoList.length}
+                    </p>
                 </div>
             )}
         </div>
