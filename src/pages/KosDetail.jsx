@@ -60,7 +60,7 @@ const DetailKos = () => {
                         <p className="text-base">
                             <span className="font-semibold">Harga:</span>{" "}
                             <span className="text-orange-500 font-bold text-lg">
-                                Rp {kos.harga}/bulan
+                                Rp {Number(kos.harga).toLocaleString("id-ID")}/bulan
                             </span>
                         </p>
 

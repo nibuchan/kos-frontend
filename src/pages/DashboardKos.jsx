@@ -4,17 +4,18 @@ import { useNavigate } from "react-router-dom";
 const DashboardKos = ({ pemilikId }) => {
     const navigate = useNavigate();
     const [kosList, setKosList] = useState([]);
-    const [form, setForm] = useState({ 
-        nama: "", 
-        alamat: "", 
-        harga: "", 
-        fasilitas: [], 
+    const [form, setForm] = useState({
+        nama: "",
+        alamat: "",
+        harga: "",
+        fasilitas: [],
         foto_url: [],
         fotoFiles: []
     });
     const [isEditing, setIsEditing] = useState(false);
     const [editId, setEditId] = useState(null);
     const [isAuthorized, setIsAuthorized] = useState(false);
+    const [previewUrls, setPreviewUrls] = useState([]);
 
     const token = localStorage.getItem("token");
 
@@ -64,11 +65,27 @@ const DashboardKos = ({ pemilikId }) => {
                 return { ...prev, fasilitas: updated };
             });
         } else if (name === "foto") {
-            setForm((prev) => ({ ...prev, fotoFiles: Array.from(files) }));
+            const newFiles = Array.from(files);
+            const updatedFiles = [...(form.fotoFiles || []), ...newFiles];
+
+            setForm((prev) => ({ ...prev, fotoFiles: updatedFiles }));
+
+            const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
+            setPreviewUrls((prev) => [...prev, ...newPreviews]);
         } else {
             setForm({ ...form, [name]: value });
         }
     };
+
+    const handleRemoveImage = (index) => {
+        const updatedFiles = [...form.fotoFiles];
+        updatedFiles.splice(index, 1);
+        setForm((prev) => ({ ...prev, fotoFiles: updatedFiles }));
+
+        const updatedPreviews = [...previewUrls];
+        updatedPreviews.splice(index, 1);
+        setPreviewUrls(updatedPreviews);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -109,6 +126,7 @@ const DashboardKos = ({ pemilikId }) => {
         }
 
         setForm({ nama: "", alamat: "", harga: "", fasilitas: [], foto_url: [], fotoFiles: [] });
+        setPreviewUrls([]);
         setIsEditing(false);
         setEditId(null);
         fetchKos();
@@ -144,7 +162,7 @@ const DashboardKos = ({ pemilikId }) => {
             return;
         }
 
-        fetchKos();
+        setKosList((prev) => prev.filter((kos) => kos.id !== id));
     };
 
     return (
@@ -182,13 +200,16 @@ const DashboardKos = ({ pemilikId }) => {
 
                 <div className="flex gap-4 text-orange-500 font-bold">
                     <label className="flex items-center gap-1">
-                        <input type="checkbox" name="fasilitas" value="AC" checked={form.fasilitas.includes("AC")} onChange={handleChange} /> AC
+                        <input type="checkbox" name="fasilitas" value="Free Air" checked={form.fasilitas.includes("Free Air")} onChange={handleChange} /> Free Air
                     </label>
                     <label className="flex items-center gap-1">
-                        <input type="checkbox" name="fasilitas" value="Wifi" checked={form.fasilitas.includes("Wifi")} onChange={handleChange} /> Wifi
+                        <input type="checkbox" name="fasilitas" value="Free Wifi" checked={form.fasilitas.includes("Free Wifi")} onChange={handleChange} /> Free Wifi
                     </label>
                     <label className="flex items-center gap-1">
-                        <input type="checkbox" name="fasilitas" value="Kamar Mandi Dalam" checked={form.fasilitas.includes("Kamar Mandi Dalam")} onChange={handleChange} /> Kamar Mandi Dalam
+                        <input type="checkbox" name="fasilitas" value="Parkir Motor dan Mobil" checked={form.fasilitas.includes("Parkir Motor dan Mobil")} onChange={handleChange} /> Parkir Motor dan Mobil
+                    </label>
+                    <label className="flex items-center gap-1">
+                        <input type="checkbox" name="fasilitas" value="Parkir Motor" checked={form.fasilitas.includes("Parkir Motor")} onChange={handleChange} /> Parkir Motor
                     </label>
                 </div>
 
@@ -200,6 +221,27 @@ const DashboardKos = ({ pemilikId }) => {
                     onChange={handleChange}
                     className="w-full border border-black text-black"
                 />
+
+                {previewUrls.length > 0 && (
+                    <div className="flex gap-3 flex-wrap mt-2">
+                        {previewUrls.map((url, i) => (
+                            <div key={i} className="relative w-24 h-24">
+                                <img
+                                    src={url}
+                                    alt={`Preview ${i}`}
+                                    className="w-24 h-24 object-cover rounded border border-orange-400 shadow-sm"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveImage(i)}
+                                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                     {isEditing ? "Update Kos" : "Tambah Kos"}
