@@ -17,7 +17,7 @@ const KosCard = ({ kos }) => {
             <div className="p-4">
                 <h2 className="font-bold text-lg text-orange-500">{kos.nama}</h2>
                 <p className="text-gray-600 text-sm">{kos.alamat}</p>
-                <p className="mt-2 font-semibold text-black">Rp {kos.harga}/bulan</p>
+                <p className="mt-2 font-semibold text-black">Rp {Number(kos.harga).toLocaleString("id-ID")}/bulan</p>
             </div>
         </div>
     );
