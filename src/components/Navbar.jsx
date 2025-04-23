@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Navbar = () => { const navigate = useNavigate();
+const Navbar = () => {
+    const navigate = useNavigate();
     const [query, setQuery] = useState("");
     const [filteredKos, setFilteredKos] = useState([]);
     const [dataKos, setDataKos] = useState([]);
@@ -30,12 +31,14 @@ const Navbar = () => { const navigate = useNavigate();
         setFilteredKos(results);
     };
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     return (
         <div className="w-screen bg-white shadow-md">
             <div className="max-w-screen mx-auto px-6 py-4 flex items-center justify-between">
                 {/* Nama Website */}
                 <div
-                     onClick={() => navigate("/")}
+                    onClick={() => navigate("/")}
                     className="hidden md:block text-2xl font-extrabold text-orange-600"
                 >
                     BaCariKos
@@ -88,18 +91,29 @@ const Navbar = () => { const navigate = useNavigate();
 
                 {/* Desktop Login/Register */}
                 <div className="hidden md:flex space-x-3">
-                    <button
-                        className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-                        onClick={() => navigate("/login")}
-                    >
-                        Login
-                    </button>
-                    <button
-                        className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-                        onClick={() => navigate("/register")}
-                    >
-                        Register
-                    </button>
+                    {user && user.role === "owner" ? (
+                        <button
+                            className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+                            onClick={() => navigate("/dashboard")}
+                        >
+                            Dashboard
+                        </button>
+                    ) : (
+                        <>
+                            <button
+                                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+                                onClick={() => navigate("/login")}
+                            >
+                                Login
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+                                onClick={() => navigate("/register")}
+                            >
+                                Register
+                            </button>
+                        </>
+                    )}
                 </div>
 
                 {/* Hamburger - Mobile Only */}
@@ -116,18 +130,29 @@ const Navbar = () => { const navigate = useNavigate();
             {menuOpen && (
                 <div className="md:hidden px-6 pb-4">
                     <div className="flex flex-col bg-white border rounded-md shadow-md">
-                        <button
-                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                            onClick={() => navigate("/login")}
-                        >
-                            Login
-                        </button>
-                        <button
-                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                            onClick={() => navigate("/register")}
-                        >
-                            Register
-                        </button>
+                        {user && user.role === "owner" ? (
+                            <button
+                                className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                                onClick={() => navigate("/dashboard")}
+                            >
+                                Dashboard
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                                    onClick={() => navigate("/login")}
+                                >
+                                    Login
+                                </button>
+                                <button
+                                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                                    onClick={() => navigate("/register")}
+                                >
+                                    Register
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
