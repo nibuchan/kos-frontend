@@ -250,25 +250,39 @@ const DashboardKos = ({ pemilikId }) => {
 
             <div className="space-y-4">
                 {kosList.map((kos) => (
-                    <div key={kos.id} className="p-4 border border-gray-200 rounded shadow flex justify-between items-center">
-                        <div>
-                            <p className="font-bold text-lg">{kos.nama}</p>
-                            <p className="text-gray-600">{kos.alamat}</p>
-                            <p className="text-gray-800">Rp {kos.harga}/bulan</p>
-                        </div>
-                        <div className="space-x-2">
-                            <button
-                                onClick={() => handleEdit(kos)}
-                                className="px-3 py-1 bg-yellow-400 text-white rounded"
-                            >
-                                Edit
-                            </button>
-                            <button
-                                onClick={() => handleDelete(kos.id)}
-                                className="px-3 py-1 bg-red-500 text-white rounded"
-                            >
-                                Hapus
-                            </button>
+                    <div
+                        key={kos.id}
+                        className="gap-4 p-4 border border-gray-200 rounded shadow flex"
+                    >
+                        {kos.foto_url && (
+                            <img
+                                src={Array.isArray(kos.foto_url) ? kos.foto_url[0] : JSON.parse(kos.foto_url)[0]}
+                                alt={kos.nama}
+                                className="w-28 h-28 object-cover rounded-md border border-gray-300"
+                            />
+                        )}
+
+                        <div className="flex flex-col justify-between w-full">
+                            <div className="text-left space-y-1">
+                                <p className="font-bold text-lg text-gray-800">{kos.nama}</p>
+                                <p className="text-gray-600">{kos.alamat}</p>
+                                <p className="text-gray-800 font-semibold">Rp {kos.harga}/bulan</p>
+                            </div>
+
+                            <div className="flex gap-2 mt-3">
+                                <button
+                                    onClick={() => handleEdit(kos)}
+                                    className="px-3 py-1 bg-yellow-400 text-white rounded"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => handleDelete(kos.id)}
+                                    className="px-3 py-1 bg-red-500 text-white rounded"
+                                >
+                                    Hapus
+                                </button>
+                            </div>
                         </div>
                     </div>
                 ))}
