@@ -15,7 +15,7 @@ const Home = () => {
     return (
         <div className="p-6">
             <Hero />
-            <div className="grid mt-40 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid mt-40 md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {dataKos.map(kos => (
                     <KosCard key={kos.id} kos={kos} />
                 ))}
