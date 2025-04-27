@@ -16,13 +16,14 @@ const DashboardKos = ({ pemilikId }) => {
     const [editId, setEditId] = useState(null);
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [previewUrls, setPreviewUrls] = useState([]);
+    const [userId, setUserId] = useState(null);
 
     const token = localStorage.getItem("token");
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
 
-        if (!storedUser || !token) {
+        if (!storedUser) {
             navigate("/login");
             return;
         }
@@ -33,23 +34,18 @@ const DashboardKos = ({ pemilikId }) => {
             alert("Akses ditolak. Halaman ini hanya untuk pemilik kos");
             navigate("/");
         } else {
-            setIsAuthorized(true);
+            setUserId(user.id);
         }
-    }, [navigate, token]);
+    }, [navigate]);
 
     useEffect(() => {
-        if (isAuthorized && pemilikId) {
+        if (userId) {
             fetchKos();
         }
-    }, [isAuthorized, pemilikId]);
+    }, [userId]);
 
     const fetchKos = async () => {
-        const res = await fetch(`https://kos-backend-production.up.railway.app/api/kos?created_by=${pemilikId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
+        const res = await fetch(`https://kos-backend-production.up.railway.app/api/kos?created_by=${userId}`);
         const data = await res.json();
         setKosList(data);
     };
