@@ -44,7 +44,7 @@ const DashboardKos = ({ pemilikId }) => {
     }, [isAuthorized, pemilikId]);
 
     const fetchKos = async () => {
-        const res = await fetch(`https://kos-backend-production.up.railway.app/api/kos?pemilik=${pemilikId}`, {
+        const res = await fetch(`https://kos-backend-production.up.railway.app/api/kos?created_by=${pemilikId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
