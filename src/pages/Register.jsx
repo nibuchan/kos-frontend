@@ -25,7 +25,7 @@ const Register = () => {
             console.log("Register response:", {
                 nama: data.user.nama,
                 email: data.user.email,
-                role: data.user.role || "user"
+                role: data.user.role || "owner"
             });
 
             alert("Registrasi berhasil! Silahkan login");
