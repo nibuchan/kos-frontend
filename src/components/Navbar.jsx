@@ -7,6 +7,7 @@ const Navbar = () => {
     const [filteredKos, setFilteredKos] = useState([]);
     const [dataKos, setDataKos] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [dashboardClicked, setDashboardClicked] = useState(false);
 
     useEffect(() => {
         fetch("https://kos-backend-production.up.railway.app/api/kos")
@@ -92,12 +93,26 @@ const Navbar = () => {
                 {/* Desktop Login/Register */}
                 <div className="hidden md:flex space-x-3">
                     {user && user.role === "owner" ? (
-                        <button
-                            className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-                            onClick={() => navigate("/dashboard")}
-                        >
-                            Dashboard
-                        </button>
+                        dashboardClicked ? (
+                            <button
+                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                onClick={() => {
+                                    localStorage.removeItem("user");
+                                    localStorage.removeItem("token");
+                                    setDashboardClicked(false);
+                                    navigate("/");
+                                }}
+                            >
+                                Logout
+                            </button>
+                        ) : (
+                            <button
+                                className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+                                onClick={() => navigate("/dashboard")}
+                            >
+                                Dashboard
+                            </button>
+                        )
                     ) : (
                         <>
                             <button
