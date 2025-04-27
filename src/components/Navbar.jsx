@@ -108,7 +108,10 @@ const Navbar = () => {
                         ) : (
                             <button
                                 className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
-                                onClick={() => navigate("/dashboard")}
+                                onClick={() => {
+                                    setDashboardClicked(true);
+                                    navigate("/dashboard");
+                                }}
                             >
                                 Dashboard
                             </button>
@@ -129,6 +132,7 @@ const Navbar = () => {
                             </button>
                         </>
                     )}
+
                 </div>
 
                 {/* Hamburger - Mobile Only */}
